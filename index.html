@@ -5,76 +5,81 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Personal Site</title>
   <style>
-    :root {
-      --maxw: 1200px;
-      --padx: 32px;
-      --gap: 32px;
-    }
+    :root { --maxw: 1200px; --padx: 64px; --gap: 48px; }
     html, body { margin: 0; padding: 0; }
+    
     body {
-      background: #fff;
+      background: #fff; 
       color: #000;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
-      line-height: 1.8;
-      font-size: 24px; /* enlarged from 18px → ~2x */
+      font-family: Aptos, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      line-height: 1.7; 
+      font-size: 24px;
     }
-    header {
-      max-width: var(--maxw);
-      margin: 0 auto;
-      padding: 20px var(--padx) 8px;
-    }
-    .logo img {
-      height: 72px; /* enlarged from 56px → 1.5x */
-      width: auto;
-      display: block;
-    }
-    .rule {
-      border: none;
-      border-top: 2px solid #000;
-      margin: 8px 0;
-    }
-    .rule + .rule {
-      margin-top: 42px; /* spacing between the two rules */
-    }
-    .wrapper {
-      max-width: var(--maxw);
-      margin: 0 auto;
-      padding: 18px var(--padx) 64px;
-    }
+
+    header { max-width: var(--maxw); margin: 0 auto; padding: 20px var(--padx) 8px; }
+    .logo img { height: 84px; width: auto; display: block; }
+    .rule { border: none; border-top: 2px solid #000; margin: 8px 0; }
+    .rule + .rule { margin-top: 8px; }
+    .nav { display:inline-flex; gap:24px; padding:0; font-size:0.85em; letter-spacing:normal; text-transform:none; }
+    .nav a { color:#000; text-decoration:none; }
+    .nav a:hover { text-decoration:underline; }
+    .wrapper { max-width: var(--maxw); margin: 0 auto; padding: 18px var(--padx) 64px; }
+
     .columns {
-      column-count: 3;
-      column-gap: var(--gap);
+      column-count: 3; column-gap: var(--gap);
+      column-fill: auto; -webkit-column-fill: auto; /* sequential fill */
+      /* We'll set an explicit height via JS so each column fills to viewport bottom */
+      height: auto;
     }
-    .columns p {
-      break-inside: avoid;
-      text-align: justify;
-      margin: 0 0 1.5rem 0;
+    .columns p { break-inside: avoid; -webkit-column-break-inside: avoid; margin: 0; text-align: justify; hyphens: auto; }
+    .columns p + p { margin-top: 1.5rem; }
+
+    a { 
+      color:#000; 
+      text-decoration:none;   
     }
-    a { color: #000; text-decoration: underline; }
-    a:hover { text-decoration: none; }
+    a:hover { 
+      color: blue;            
+      text-decoration:underline;   
+    }
+
+
     @media (max-width: 1024px) { .columns { column-count: 2; } }
-    @media (max-width: 640px)  { body{font-size:36px;} .columns { column-count: 1; } }
+    @media (max-width: 640px)  { body{font-size:20px;} .columns { column-count: 1; height:auto !important; } }
   </style>
 </head>
 <body>
   <header>
-    <div class="logo">
-      <img src="sunrise.jpg" alt="logo" />
-    </div>
+    <div class="logo"><img src="sunrise.jpg" alt="logo" /></div>
     <hr class="rule" />
+    <div class="nav">ABOUT WORK</div>
     <hr class="rule" />
   </header>
 
   <main class="wrapper">
-    <div class="columns">
-      <p>Chuyang Wu designs & builds digital infrastructure for humans. He believes that autonomy is earned, not assumed. That form is a function of function. That signal outranks spectacle. And that elegance is hierarchical and recursive.</p>
-
-      <p>He is inspired by a childhood steeped in both history and the avant-garde, shaped between Nanjing and New York City, and is now based in Shenzhen.</p>
-
-      <p>He is currently working on his agentic startup project. He has previously interned at Tencent and Miracleplus (YC China). He obtained his Bachelor’s of Arts at Cornell University in Computer Science and Economics, minoring in History and previously led teams on Cornell SDS.</p>
-
-      <p>You can find his <a href="https://x.com/wcysunrise" target="_blank">X</a>, <a href="https://www.linkedin.com/in/wuchuyang/" target="_blank">LinkedIn</a>, <a href="#">Art</a>, <a href="#">Resume</a>, <a href="#">Github</a>.</p>
+    <div id="about" class="columns">
+      <p>Chuyang Wu designs and builds digital infrastructure for humans. He believes that autonomy is earned, not assumed. That form is a function of function. And that elegance is hierarchical and recursive.</p>
+      <p>He is inspired by a childhood steeped in both the historical and the avant-garde, shaped between Nanjing and New York City, and is now based in Shenzhen.</p>
+      <p>He is currently working on his agentic startup project. He has previously interned at <a href="https://www.miracleplus.com">Miracleplus (YC China)</a> and  <a href="https://www.tencent.com">Tencent</a>. He obtained his Bachelor’s of Arts at Cornell University in Computer Science and Economics, minoring in History and previously led teams on <a href="https://www.ilr.cornell.edu/cornell-debate">Cornell SDS</a>.</p>
+      <p>You can find his <a href="https://x.com/wcysunrise">X</a>, <a href="https://www.linkedin.com/in/wuchuyang/">LinkedIn</a>, <a href="#">Art</a>, <a href="#">Resume</a>, <a href="https://github.com/chuyang-wu">Github</a>.</p>
     </div>
   </main>
+
+  <script>
+    // Make each column fill to the bottom of the viewport before flowing to the next column.
+    function sizeColumns() {
+      const header = document.querySelector('header');
+      const wrapper = document.querySelector('.wrapper');
+      const cols = document.querySelector('.columns');
+      if (!header || !wrapper || !cols) return;
+      const headerH = header.offsetHeight;
+      const cs = getComputedStyle(wrapper);
+      const padV = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+      const target = Math.max(200, window.innerHeight - headerH - padV);
+      cols.style.height = target + 'px';
+    }
+    window.addEventListener('load', sizeColumns);
+    window.addEventListener('resize', sizeColumns);
+  </script>
 </body>
 </html>
