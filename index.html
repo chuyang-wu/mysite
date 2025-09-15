@@ -4,74 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Personal Site</title>
-  <style>
-    :root { --maxw: 1200px; --padx: 64px; --gap: 48px; }
-    html, body { margin: 0; padding: 0; }
-    body {
-      background:#000; color:#fff;
-      font-family: Aptos, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
-      line-height:1.7; font-size:24px;
-    }
-
-    header { max-width:var(--maxw); margin:0 auto; padding:20px var(--padx) 8px; }
-    .logo img { height:84px; width:auto; display:block; }
-    .rule { border:none; border-top:2px solid #fff; margin:8px 0; }
-    .rule + .rule { margin-top:8px; }
-    .nav { display:inline-flex; gap:24px; padding:0; font-size:.85em; }
-    .nav a { color:inherit; text-decoration:none; }
-    .nav a:hover { text-decoration:underline; }
-
-    .wrapper { max-width:var(--maxw); margin:0 auto; padding:18px var(--padx) 64px; }
-
-    /* --- 关键布局：三栏网格，右侧永远空白 --- */
-    .layout {
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--gap);
-      align-items:start;
-    }
-
-    /* 文章区跨两格（左 & 中），内部再做 2 列 */
-    .columns {
-      grid-column: 1 / span 2;
-      column-count: 2;
-      column-gap: var(--gap);
-      column-fill: balance;
-    }
-    .columns p { break-inside: avoid; margin:0 0 1.5rem 0; text-align:justify; hyphens:auto; }
-
-    .footer {
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      text-align: center;
-      padding: 12px 0;
-      font-size: 16px;
-      color: #aaa;
-      background: #000; /* 保持和页面背景一致 */
-    }
-
-
-    a { color:#fff; text-decoration:none; }
-    a:hover { color:#69e0f8; text-decoration:underline; }
-
-    /* 响应式：≤1024px：文章内部降为单列，但外层仍留右侧空白一格 */
-    @media (max-width: 1024px) {
-      .columns { column-count: 1; }
-    }
-    /* ≤640px：栅格折叠为单列，不再强留右侧空白；移动端体验优先 */
-    @media (max-width: 640px) {
-      body { font-size:20px; }
-      .layout { grid-template-columns: 1fr; }
-      .columns { grid-column: 1; column-count: 1; }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header>
     <div class="logo"><img src="sunrise.jpg" alt="logo" /></div>
     <hr class="rule" />
-    <div class="nav">XOXO.SUNRISE</div>
+    <div class="nav">
+      <span class="nav-left">XOXO.SUNRISE</span>
+      <a class="nav-right" href="projects.html">PROJECTS</a>
+    </div>
     <hr class="rule" />
   </header>
 
@@ -81,12 +23,14 @@
       <div id="about" class="columns">
         <p>Chuyang Wu designs and builds digital infrastructure for humans ◉ He believes that autonomy is earned not assumed ◐ that form is a function of function ◐ and that elegance is hierarchical and recursive ◉</p>
         <p>He is inspired by a childhood steeped in both the historical and the avant-garde ◐ shaped between Nanjing and New York City ◐ and is now based in Shenzhen ◉</p>
-        <p>He is currently working on his agentic startup project ◉ He has previously interned at <a href="https://www.miracleplus.com">Miracleplus (YC China)</a> and <a href="https://www.tencent.com">Tencent</a> ◉ He obtained his Bachelor’s of Arts at Cornell University in Computer Science and Economics ◐ minoring in History and previously led teams on <a href="https://www.ilr.cornell.edu/cornell-debate">Cornell SDS</a> ◉</p>
-        <p>You can find his <a href="https://x.com/wcysunrise">X</a> ◉ <a href="https://www.linkedin.com/in/wuchuyang/">LinkedIn</a> ◉ <a href="#">Art</a> ◉ <a href="#">Resume</a> ◉ <a href="https://github.com/chuyang-wu">Github</a> ◉</p>
+        <p>He obtained his Bachelor’s of Arts at <a href="https://www.cornell.edu">Cornell University</a> in Computer Science and Economics ◐ minoring in History and previously led teams on <a href="https://www.ilr.cornell.edu/cornell-debate">Cornell SDS</a> ◉ He has previously interned at <a href="https://www.miracleplus.com">Miracleplus (YC China)</a> and <a href="https://www.tencent.com">Tencent</a> ◉ He is currently working on his agentic startup project ◉</p>
+        <p>You can find his <a href="https://x.com/wcysunrise">X</a> ◉ <a href="https://www.linkedin.com/in/wuchuyang/">LinkedIn</a> ◉ <a href="https://www.instagram.com/studio_sunrisee/">Art</a> ◉ <a href="#">Resume</a> ◉ <a href="https://github.com/chuyang-wu">Github</a> ◉</p>
       </div>
 
-      <!-- 右侧一格：故意留空，永远不放东西 -->
-      <div aria-hidden="true"></div>
+      <!-- 右侧一格：人像 -->
+      <aside class="side">
+        <img class="portrait" src="myprotrait.jpg" alt="Portrait of Chuyang Wu" loading="lazy" decoding="async" />
+      </aside>
     </section>
   </main>
   <footer class="footer">

@@ -1,0 +1,68 @@
+:root { --maxw: 1200px; --padx: 64px; --gap: 48px; }
+html, body { margin: 0; padding: 0; }
+body {
+  background:#6388df; color:#fff;
+  font-family: Aptos, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  line-height:1.7; font-size:24px;
+}
+
+header { max-width:var(--maxw); margin:0 auto; padding:20px var(--padx) 8px; }
+.logo img { height:84px; width:auto; display:block; }
+.rule { border:none; border-top:2px solid #fff; margin:8px 0; }
+
+.rule + .rule { margin-top:8px; }
+.nav { display:flex; align-items:center; justify-content:space-between; gap:24px; padding:0; font-size:.85em; }
+.nav-left { font-weight: 500; letter-spacing: .08em; }
+.nav-right { font-weight: 600; letter-spacing: .1em; }
+.nav a { color:inherit; text-decoration:none; }
+.nav a:hover { text-decoration:underline; }
+
+.wrapper { max-width:var(--maxw); margin:0 auto; padding:18px var(--padx) 64px; }
+
+/* --- 关键布局：三栏网格，右侧永远空白 --- */
+.layout {
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+  align-items:start;
+}
+
+/* 文章区跨两格（左 & 中），内部再做 2 列 */
+.columns {
+  grid-column: 1 / span 2;
+  column-count: 2;
+  column-gap: var(--gap);
+  column-fill: balance;
+}
+.columns p { break-inside: avoid; margin:0 0 1.5rem 0; text-align:justify; hyphens:auto; }
+
+/* 右侧人像 */
+.side { grid-column: 3; align-self: start; justify-self: end; width: clamp(220px, 26vw, 340px); }
+.portrait { width: 100%; height: auto; display: block; border-radius: 12px; box-shadow: 0 8px 28px rgba(0,0,0,.35); }
+
+.footer {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  padding: 12px 0;
+  font-size: 16px;
+  color: #aaa;
+  background: #6388df; /* 保持和页面背景一致 */
+}
+
+
+a { color:#fff; text-decoration:none; }
+a:hover { color:#f89269; text-decoration:underline; }
+
+/* 响应式：≤1024px：文章内部降为单列，但外层仍留右侧空白一格 */
+@media (max-width: 1024px) {
+  .columns { column-count: 1; }
+}
+/* ≤640px：栅格折叠为单列，不再强留右侧空白；移动端体验优先 */
+@media (max-width: 640px) {
+  body { font-size:20px; }
+  .layout { grid-template-columns: 1fr; }
+  .columns { grid-column: 1; column-count: 1; }
+  .side { width: 100%; justify-self: start; margin-top: 12px; }
+}
