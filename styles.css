@@ -59,10 +59,16 @@ a:hover { color:#f89269; text-decoration:underline; }
 @media (max-width: 1024px) {
   .columns { column-count: 1; }
 }
+/* ≤900px：整页栅格改为单列，并强制人像排在文本之后 */
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  .columns { grid-column: 1; }
+  .side { grid-column: 1; grid-row: 2; width: 100%; justify-self: start; margin-top: 16px; }
+}
 /* ≤640px：栅格折叠为单列，不再强留右侧空白；移动端体验优先 */
 @media (max-width: 640px) {
   body { font-size:20px; }
   .layout { grid-template-columns: 1fr; }
   .columns { grid-column: 1; column-count: 1; }
-  .side { width: 100%; justify-self: start; margin-top: 12px; }
+  .side { grid-column: 1; grid-row: 2; width: 100%; justify-self: start; margin-top: 12px; }
 }
